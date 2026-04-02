@@ -1,0 +1,433 @@
+
+
+```{r}
+name <- "Adjara"
+print(name)
+```
+```{r}
+num1 <- 7
+num2 <- 10
+print(num1 + num2)
+```
+```{r}
+is_raining <- TRUE
+print(typeof(is_raining))
+```
+```{r}
+favorite_number <-readline("Enter your favorite number: ")
+print(favorite_number)
+```
+
+```{r}
+x <- as.integer("100")
+print(x)
+print(typeof(x))
+```
+
+
+```{r}
+price <- 9.99
+print(as.integer(price)) 
+```
+```{r}
+text <- "Hello
+This is line 2"
+print(text)
+```
+```{r}
+rep("Hello" , 5)
+```
+
+```{r}
+paste("My score is", 95)
+```
+```{r}
+print(grepl("apple", "I have an apple and a banana"))
+```
+
+
+```{r}
+area <- 3.14 * 5^2
+print(area)
+```
+```{r}
+print(17 %% 2 == 0)
+```
+```{r}
+x <- 5
+x <- x + 10
+print(x)
+```
+```{r}
+print(4 > 3)
+print(8 <= 3)
+```
+```{r}
+age <- 16
+print(age >= 13 & age <= 19)
+```
+```{r}
+char <- "y"
+print(char == "y" | char == "n")
+```
+```{r}
+is_logged_in <- TRUE
+print(is_logged_in)
+```
+```{r}
+list_a <- c(1,2,3)
+list_b <- c(1,2,3)
+print(identical(list_a, list_b))
+```
+```{r}
+print(5 %in% c(1,2,3,4,5))
+```
+```{r}
+value <- NULL
+print(is.null(value))
+```
+# 1
+```{r}
+x <- 5
+if (x > 0) print("Positive")
+```
+```{r}
+x <- 4
+if (x %% 2 == 0) print("Even") else print("Odd")
+```
+```{r}
+grade <- 85
+if (grade < 50){ 
+  print("F")
+}else if (grade < 70){ 
+  print("C")
+}else if (grade < 90){
+  print("B")
+}else{ 
+  print("A")
+}
+```
+```{r}
+for (f in c("apple","banana","cherry")) print(f)
+```
+```{r}
+sum <- 0
+for (i in 1:10) sum <- sum + i
+print(sum)
+```
+```{r}
+i <- 5
+while (i >= 1) {
+  print(i)
+  i <- i - 1
+}
+```
+```{r}
+repeat {
+  x <- readline("Type stop: ")
+  if (x == "stop") break
+}
+```
+
+```{r}
+for (i in 1:4) {
+  for (j in 1:4) cat("#")
+  cat("\n")
+}
+```
+
+```{r}
+for (i in 1:10) {
+  if (i == 5) break
+  print(i)
+}
+```
+```{r}
+for (i in 1:10) {
+  if (i == 5) next
+  print(i)
+}   
+```
+```{r}
+greet <- function() 
+  print("Hello, there!")
+greet()
+```
+```{r}
+multiply <- function(a,b)
+  return(a*b)
+print(multiply(3,5))
+```
+```{r}
+describe_pet <- function(pet_name, animal_type="dog") 
+  print(paste("I have a dog call buddy"))
+describe_pet()
+```
+
+```{r}
+get_max <- function(x) 
+  return(max(1, 5, 8, 9))
+get_max()
+```
+```{r}
+local_example <- function(x)
+    x = 10
+print(x =10)
+local_example()
+```
+
+```{r}
+show_global <- function(global_var)
+global_var <- "I am global"
+    print(global_var)
+show_global()
+```
+```{r}
+square <- function(x) x^2
+square(4)
+```
+```{r}
+nums <- c(1,2,3,4,5,6)
+Filter(function(x) x %% 2 == 0, nums)
+```
+```{r}
+temps <- c(0,10,20)
+temps * 9/5 + 32
+```
+```{r}
+countdown <- function(n)
+  if(n == 0) return()
+  print(n)
+  countdown(n-1)
+countdown(n)
+```
+
+# 1
+```{r}
+colors <- c("pink","grey","purple")
+print(colors[2])
+```
+```{r}
+colors <- c(colors, "blue")
+print(colors)
+```
+
+```{r}
+months <- c("Jan","Feb","Mar","Apr","May","Juin","Jul","Aug","Sept","Oct","Dov","Dec")
+print(months)
+```
+```{r}
+student <- list(name="Adja", age=18, courses=c("Math","phy"))
+student
+```
+```{r}
+print(student$age)
+```
+```{r}
+student$year <- 2
+print(student$year)
+```
+
+```{r}
+print(unique(c(1,2,2,3,4,4,5)))
+```
+
+```{r}
+colors <- c("pink","grey","purple")
+colors <- colors[colors != "pink"]
+print(colors)
+```
+
+
+
+```{r}
+print(names(student))
+```
+```{r}
+intersect(c(1,2,3), c(2,3,4))
+```
+
+
+```{r}
+x <- c(1,2,3,4,5)
+x
+```
+```{r}
+matrix(0, nrow=3, ncol=3)
+```
+
+```{r}
+df <- data.frame(Name=c("Alice","Bob"), Age=c(24,35))
+df
+```
+```{r}
+data(iris)
+iris
+
+```
+```{r}
+head(iris)
+```
+```{r}
+str(iris)
+```
+```{r}
+plot(c(1,4,2,5), type="l")
+
+```
+```{r}
+plot(iris$Sepal.Length, iris$Sepal.Width)
+```
+```{r}
+X <- iris[,1:4]
+y <- iris$Species
+```
+
+```{r}
+x
+```
+
+```{r}
+y
+```
+
+```{r}
+set.seed(1)
+index <- sample(1:nrow(iris), 0.8*nrow(iris))
+train <- iris[index,]
+test <- iris[-index,]
+```
+
+
+```{r}
+index
+```
+```{r}
+train
+```
+
+```{r}
+test
+```
+
+```{r}
+arr <- c(1, 2, 3, 4, 5)
+print(arr)
+```
+```{r}
+zeros <- matrix(0, nrow = 2, ncol = 3)
+print(zeros)
+
+```
+```{r}
+ones <- matrix(1, nrow = 4, ncol = 4)
+print(ones)
+```
+```{r}
+seq_arr <- seq(0, 1, length.out = 10)
+print(seq_arr)
+```
+```{r}
+rand_arr <- matrix(rnorm(25), nrow = 5)
+print(rand_arr)
+```
+```{r}
+arr2d <- matrix(1:15, nrow = 3)
+print(dim(arr2d))   
+print(length(dim(arr2d)))  
+```
+
+```{r}
+arr <- c(10, 20, 30, 40, 50)
+print(arr[3])   
+```
+```{r}
+arr <- seq(10, 50, 10)
+print(arr[2:4])
+```
+```{r}
+arr <- c(1, 2, 3, 4, 5, 6)
+print(arr[arr > 3])
+```
+```{r}
+a <- c(1, 2, 3)
+b <- c(4, 5, 6)
+print(a + b)
+```
+# 1. Series
+```{r}
+names_vec <- c("Alice","Bob","Charlie")
+print(names_vec)
+```
+```{r}
+df <- data.frame(Name = c("Anna", "Bob", "Charlie"),Age = c(25, 30, 35))
+print(df)
+```
+```{r}
+head(df, 2)
+```
+```{r}
+print(df$Age)
+```
+
+```{r}
+str(df)
+```
+```{r}
+df$City <- c("London", "New York", "Berlin")
+print(df)
+```
+```{r}
+summary(df$Age)
+```
+```{r}
+df2 <- data.frame(A = c(1, 2, NA))
+df2$A[is.na(df2$A)] <- 0
+print(df2)
+```
+k
+
+```{r}
+plot(c(1, 2, 3, 4), type="l")
+```
+```{r}
+plot(c(1, 4, 2, 5), type="l",
+     main="My First Plot",
+     xlab="X", ylab="Y")
+```
+
+```{r}
+plot(c(1,2,3,4,5), c(2,4,1,5,3))
+```
+
+```{r}
+barplot(c(5,7,3), names.arg=c("A","B","C"))
+```
+```{r}
+hist(rnorm(1000))
+```
+```{r}
+par(mfrow=c(1,2))
+plot(c(1,2,3,4), type="l")
+barplot(c(5,7,3))
+par(mfrow=c(1,1))
+```
+
+
+```{r}
+plot(c(1,2,3,4), type="l", col="red", lty=2)
+```
+```{r}
+plot(c(1,2,3), type="l", ylim=c(1,3))
+lines(c(3,2,1), lty=2)
+legend("topright", legend=c("y1","y2"), lty=c(1,2))
+```
+```{r}
+plot(c(1,2,3,4), type="l", xlim=c(0,10), ylim=c(-5,5))
+```
+```{r}
+png("my_plot.png")
+plot(c(1,2,3,4), type="l")
+dev.off()
+```
+
