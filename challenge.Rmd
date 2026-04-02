@@ -1,0 +1,141 @@
+
+```{r}
+rad_to_deg <- function(radians) {
+  pi <- 3.14159
+  degrees <- radians * (180 / pi)
+  return(degrees)
+}
+rad_to_deg(3.14)
+```
+```{r}
+sort_list <- function(lst, order) {
+  if (order == "asc") {
+    return(sort(lst))
+  } else if (order == "desc") {
+    return(sort(lst, decreasing = TRUE))
+  } else {
+    return(lst)
+  }
+}
+```
+
+```{r}
+sort_list(c(5, 2, 8, 1), "asc")
+sort_list(c(5, 2, 8, 1), "desc")
+sort_list(c(5, 2, 8, 1), "none")
+```
+
+
+```{r}
+decimal_to_binary <- function(n) {
+  return(as.character(intToBits(n))[1:10])
+}
+decimal_to_binary(10)
+```
+```{r}
+decimal_to_binary <- function(n) {
+  return(paste(rev(as.integer(intToBits(n))[1:10]), collapse=""))
+}
+```
+
+```{r}
+count_vowels <- function(word) {
+  vowels <- c("a","e","i","o","u")
+  letters <- strsplit(tolower(word), "")[[1]]
+  
+  count <- 0
+  for (l in letters) {
+    if (l %in% vowels) {
+      count <- count + 1
+    }
+  }
+  return(count)
+}
+count_vowels("hello")
+```
+
+```{r}
+hide_card <- function(number) {
+  n <- nchar(number)
+  hidden <- paste(rep("*", n-4), collapse="")
+  last4 <- substr(number, n-3, n)
+  return(paste0(hidden, last4))
+}
+hide_card("4444444444444444")
+```
+
+```{r}
+xo_equal <- function(s) {
+  s <- tolower(s)
+  x_count <- lengths(regmatches(s, gregexpr("x", s)))
+  o_count <- lengths(regmatches(s, gregexpr("o", s)))
+  return(x_count == o_count)
+}
+xo_equal("xoxo")
+xo_equal("xxooox")
+```
+
+```{r}
+calculator <- function(a, op, b) {
+  if (op == "+") {
+    return(a + b)
+  } else if (op == "-") {
+    return(a - b)
+  } else if (op == "*") {
+    return(a * b)
+  } else if (op == "/") {
+    return(a / b)
+  }
+}
+calculator(6, "*", 4)
+calculator(10, "+", 5)
+```
+
+```{r}
+
+```
+
+```{r}
+apply_discount <- function(price, discount) {
+  return(price - (price * discount / 100))
+}
+apply_discount(100, 20)
+```
+
+```{r}
+just_numbers <- function(lst) {
+  return(lst[sapply(lst, is.numeric)])
+}
+just_numbers(list(1, "a", 2, "b", 3))
+```
+
+```{r}
+repeat_chars <- function(s) {
+  letters <- strsplit(s, "")[[1]]
+  result <- ""
+  
+  for (l in letters) {
+    result <- paste0(result, l, l)
+  }
+  
+  return(result)
+}
+repeat_chars("now")
+```
+
+```{r}
+to_upper <- function(s) {
+  return(toupper(s))
+}
+to_upper("goodbye")
+```
+
+```{r}
+add_dots <- function(s) {
+  letters <- strsplit(s, "")[[1]]
+  return(paste(letters, collapse="."))
+}
+add_dots("skills")
+```
+
+
