@@ -1,0 +1,253 @@
+```{r}
+data<-read.csv( 'diabetes.csv' , header = T)
+```
+
+```{r}
+data
+```
+
+```{r}
+X <- data[, c("Glucose", "BMI")]
+X
+```
+```{r}
+y <- data[, "Outcome"]
+y
+```
+```{r}
+y <- matrix(data$Outcome, ncol = 1)
+y
+```
+```{r}
+count = 0 
+for (i in 1:length(data$BMI)){
+  if(data$BMI[i] == 0){
+    count = count + 1
+  }
+}
+count
+```
+```{r}
+count = 0 
+for (i in 1:length(data$Glucose)){
+  if(data$Glucose[i] == 0){
+    count = count + 1
+  }
+}
+count
+```
+```{r}
+data <- data[data$Glucose != 0 & data$BMI != 0, ]
+
+```
+
+```{r}
+plot(data$Glucose, data$BMI,col = factor(data$Outcome),pch = 16)
+
+```
+```{r}
+sigmoid<-function(z){
+  return(1/(1+exp(-z))) 
+}
+```
+
+```{r}
+cost<-function( x,  y, theta= c(0,0,0)) {
+  m <- length(y)
+  h_prime = x %*% theta
+  h <- sigmoid(x%*%theta )
+  j<- (-1/m)*sum(y*log(h)+(1-y)*log(1-h))
+  return(j)
+  
+}
+```
+
+```{r}
+gradient<-function(x, y, theta= c(0,0,0) ){
+  m <- length(y)
+  h_prime = x%*%theta 
+  h <- sigmoid(h_prime)
+  g<- (1/m)*t(x)%*%(h-y)
+  return(g)
+}
+```
+
+```{r}
+hist(data$BMI)
+
+```
+```{r}
+hist(data$Glucose)
+
+```
+
+```{r}
+m <- nrow(X)
+ones <- matrix(1,m,1)
+X<- cbind( ones,X )
+X<- as.matrix(X)
+```
+
+```{r}
+X
+```
+```{r}
+cost_<- cost( X, y )
+cost
+```
+```{r}
+grad_ <- gradient( X, y)
+grad_
+```
+
+
+
+```{r}
+
+data <- na.omit(data)
+
+X <- as.matrix(cbind(1, data$Glucose, data$BMI))  # colonne de 1 OBLIGATOIRE ici
+y <- as.matrix(data$Outcome)
+
+```
+
+```{r}
+X_norm <- X
+X_norm[,2] <- (X[,2] - mean(X[,2])) / sd(X[,2])
+X_norm[,3] <- (X[,3] - mean(X[,3])) / sd(X[,3])
+```
+
+```{r}
+X_norm
+```
+
+
+```{r}
+sigmoid <- function(z) {
+  return(1 / (1 + exp(-z)))
+}
+```
+
+```{r}
+gradientDescent <- function(X, y, theta, alpha, iterations) {
+  m <- length(y)
+
+  for(i in 1:iterations){
+    h <- sigmoid(X %*% theta)
+
+    gradient <- (1/m) * t(X) %*% (h - y)
+    theta <- theta - alpha * gradient
+
+    if(any(is.na(theta)) || any(is.infinite(theta))){
+      stop("❌ Divergence → diminue alpha")
+    }
+  }
+
+  return(theta)
+}
+```
+
+
+
+
+
+
+```{r}
+r <- gradientDescentClassification(X, y, num_iters = 200000)
+```
+```{r}
+cost_history = r$cost_history
+thetaClass = r$theta
+thetaClass
+```
+
+
+```{r}
+theta_init <- rep(0, ncol(X_norm))
+
+theta <- gradientDescent(X_norm, y, theta_init, alpha = 0.01, iterations = 1000)
+
+print(theta)
+```
+```{r}
+plot(c(1:200000), cost_history, type = "l", xlab = "number of itertions", ylab="cost values")
+```
+
+
+
+```{r}
+
+ind0 <- which(y == 0)
+ind1 <- which(y == 1)
+
+plot(X_norm[ind0,2], X_norm[ind0,3],
+     col = "yellow", pch = 16,
+     xlab = "Glucose (normalized)", ylab = "BMI (normalized)",
+     xlim = range(X_norm[,2]),
+     ylim = range(X_norm[,3]))
+
+points(X_norm[ind1,2], X_norm[ind1,3],
+       col = "blue", pch = 3)
+
+
+x_plot <- seq(min(X_norm[,2]), max(X_norm[,2]), length.out = 100)
+
+if(abs(theta[3]) < 1e-6){
+  abline(v = -theta[1]/theta[2], col = "red", lwd = 2)
+} else {
+  y_plot <- -(theta[1] + theta[2]*x_plot) / theta[3]
+  lines(x_plot, y_plot, col = "red", lwd = 2)
+}
+
+
+
+legend("topright",
+       legend = c("Non-diabetic", "Diabetic", "Decision boundary"),
+       col = c("yellow", "blue", "red"),
+       pch = c(16, 3, NA),
+       lty = c(NA, NA, 1),
+       lwd = c(NA, NA, 2))
+```
+
+
+
+
+
+
+
+```{r}
+df <- data.frame(y = y,Glucose = X[,2],BMI = X[,3])
+
+model <- glm(y ~ Glucose + BMI, data = df, family = binomial)
+
+```
+
+```{r}
+theta <- coef(model)
+print(theta)
+```
+```{r}
+ind0 <- which(y == 0)
+ind1 <- which(y == 1)
+
+plot(X[ind0,2], X[ind0,3],
+     col = "yellow", pch = 16,
+     xlab = "Glucose", ylab = "BMI")
+
+points(X[ind1,2], X[ind1,3],
+       col = "blue", pch = 3)
+
+
+x_plot <- seq(min(X[,2]), max(X[,2]), length.out = 100)
+y_plot <- -(theta[1] + theta[2]*x_plot) / theta[3]
+
+lines(x_plot, y_plot, col = "red", lwd = 2)
+
+legend("topright",
+       legend = c("Non-diabetic", "Diabetic", "Decision boundary"),
+       col = c("yellow", "blue", "red"),
+       pch = c(16, 3, NA),
+       lty = c(NA, NA, 1),
+       lwd = c(NA, NA, 2))
+```
+
