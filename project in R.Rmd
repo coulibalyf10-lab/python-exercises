@@ -1,0 +1,229 @@
+
+
+```{r}
+df<-read.csv("C:/Users/COULIBALY/multiple_linear_regression_dataset.csv", header=TRUE)
+df
+```
+
+DATA CLEANING
+
+```{r}
+dim(df)
+```
+
+```{r}
+df$Education.level <- NULL
+df
+```
+
+```{r}
+df[duplicated(df), ]
+```
+
+```{r}
+df <- unique(df)
+df
+```
+
+```{r}
+dim(df)
+```
+
+PREDICTION:
+
+```{r}
+X <- df[, c("age", "experience")]
+y <- df[,3]
+```
+
+```{r}
+X
+```
+```{r}
+y
+```
+
+```{r}
+costfunction = function(X, y, theta=c(0,0,0)) {
+  m = length(y)
+  ones <- matrix(1, m, 1)
+  X_extend <- cbind(ones, X)
+  X_extend <- as.matrix(X_extend)
+  y <- as.matrix(y)
+  
+  h = X_extend %*% theta
+  J = 1/(2*m) * sum((h - y)^2)
+  
+  return(J)
+}
+```
+
+```{r}
+X <- df[, c("age", "experience")]
+y <- df$income
+X_mean <- colMeans(X)
+X_mean
+```
+```{r}
+X_mean1 <- matrix(c(X_mean[1], X_mean[2]),nrow = length(y), ncol = 2, byrow = TRUE)
+X_mean1
+```
+```{r}
+X_norm <- X - X_mean1
+X_norm
+```
+```{r}
+X_std <- apply(X_norm, 2, sd)
+X_std
+```
+
+```{r}
+X_norm <- X_norm / X_std1
+X_norm
+```
+
+```{r}
+gradientDescente <- function(X, y, theta=c(0,0,0), alpha=0.01, num_iter=50) {
+  
+  m <- length(y)
+  ones <- matrix(1, m, 1)
+  X_extend <- cbind(ones, X)
+  X_extend <- as.matrix(X_extend)
+  y <- as.matrix(y)
+  
+  j_history <- c()
+  theta_history <- matrix(0, nrow=num_iter, ncol=3)
+  
+  for (i in 1:num_iter) {
+    
+    h <- X_extend %*% theta
+    
+    theta[1] <- theta[1] - (alpha/m) * sum(h - y)
+    theta[2] <- theta[2] - (alpha/m) * sum((h - y) * X_extend[,2])
+    theta[3] <- theta[3] - (alpha/m) * sum((h - y) * X_extend[,3])
+    
+    j_history[i] <- costfunction(X, y, theta)
+    theta_history[i, ] <- theta
+  }
+  
+  return(list(theta = theta,
+              cost = j_history,
+              theta_history = theta_history))
+}
+```
+
+```{r}
+cost_1  <- gradientDescente(X_norm, y, theta=c(0,0,0), alpha=1,   num_iter=50)$cost
+cost_03 <- gradientDescente(X_norm, y, theta=c(0,0,0), alpha=0.3, num_iter=50)$cost
+cost_01 <- gradientDescente(X_norm, y, theta=c(0,0,0), alpha=0.1, num_iter=50)$cost
+```
+
+
+```{r}
+plot(iterations, cost_1,
+     type = "l", col = "blue",
+     xlab = "Number of Iterations",
+     ylab = "Cost Function",
+     ylim = range(c(cost_1, cost_03, cost_01)))
+
+lines(iterations, cost_03, col = "orange")
+lines(iterations, cost_01, col = "green")
+
+legend("topright",
+       legend = c("alpha=1", "alpha=0.3", "alpha=0.1"),
+       col = c("blue", "orange", "green"),
+       lty = 1)
+```
+
+
+
+```{r}
+theta_final <- result$theta
+
+theta_final <- as.numeric(unlist(theta_final))
+
+X_with_bias <- as.matrix(X_with_bias)
+mode(X_with_bias) <- "numeric"
+
+pred_5 <- X_with_bias[1:5, ] %*% theta_final
+
+print(pred_5)
+```
+
+
+
+DATA VIZUALIZATION
+```{r}
+# 1. Age distribution
+hist(data$age)
+
+# 2. Income distribution
+hist(data$income)
+
+# 3. Experience vs Income
+plot(data$experience, data$income)
+
+# 4. Education vs Income
+boxplot(income ~ education, data = data)
+
+# 5. High income count
+barplot(table(data$high_income))
+```
+
+```{r}
+plot(df$age, df$income, pch=16, col="blue", xlab="AGE", ylab="INCOME", main="Age vs Income")
+```
+
+
+
+```{r}
+hist(df$age)
+```
+
+```{r}
+hist(df$income)
+```
+
+```{r}
+plot(df$experience, df$income)
+```
+```{r}
+boxplot(df$income, main = "Boxplot of Income", ylab = "Income")
+```
+
+```{r}
+barplot(table(df$income),main = "Barplot of Income",xlab = "Income",ylab = "Frequency",col = "skyblue")
+```
+
+
+
+```{r}
+model <- lm(income ~ age + experience, data = df)
+```
+
+```{r}
+result <- data.frame(Person = 1:5,Age = df$age[1:5],Experience = df$experience[1:5], Actual_Income = df$income[1:5],Predicted_Income = round(pred_5, 2))
+
+result
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
